@@ -1,44 +1,16 @@
 
-const { ContactsModel, GroupsModel } = require('./models');
+const { ContactsController, GroupsController } = require('./controllers');
 
-// ContactsModel.getAll((result) => {
-//   console.log(result);
-// });
+let command = process.argv[2];
+let values = process.argv.slice(3);
 
-// ContactsModel.addOne('permata', 'Sepulsa', '123-555', 'permata@gmail.com', (result) => {
-//   console.log(result);
-// });
+console.log(ContactsController, GroupsController);
 
-// ContactsModel.findById(1, (result) => {
-//   console.log(result);
-// });
-
-// ContactsModel.deleteById(4, (result) => {
-//   console.log(result);
-// });
-
-// ContactsModel.updateById(3, 'permata', 'Alpha Tech', '123-123', 'permata@gmail.com', (result) => {
-//   console.log(result);
-// });
-
-// -----------------
-
-// GroupsModel.getAll((result) => {
-//   console.log(result);
-// });
-
-// GroupsModel.addOne('PHP', (result) => {
-//   console.log(result);
-// });
-
-// GroupsModel.findById(1, (result) => {
-//   console.log(result);
-// });
-
-// GroupsModel.deleteById(4, (result) => {
-//   console.log(result);
-// });
-
-// GroupsModel.updateById(3, 'RobyOnRails', (result) => {
-//   console.log(result);
-// });
+switch(command) {
+  case 'contact:list' :    
+    ContactsController.showList();
+    break;
+  default:
+    console.log('Please enter correct command!');
+    break;
+}
