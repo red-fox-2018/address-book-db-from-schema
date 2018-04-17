@@ -14,7 +14,19 @@ class Group {
         callback('group berhasil di update')
     }
     delete(id,callback) {
-        db.run(`DELETE FROM groups WHERE id = ${id}`)
+        let delete_assign = `SELECT contactGroups.id FROM groups
+                            join contactGroups
+                            ON groups.id=contactGroups.groupsId
+                            WHERE contactGroups.groupsId = 5`
+                            
+        db.each(delete_assign,function (err,rows) {
+            if(err){
+                callback('error')
+            }
+            db.run(`DELETE FROM contactGroups WHERE id = ${rows.id}`)
+        })
+        db.run(`DELETE FROM groups  WHERE id = ${id}`)
+
         callback('group berhasil di delete')
     }
 }

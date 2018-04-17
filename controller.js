@@ -1,4 +1,4 @@
-const {Contact, Group, Model}= require('./model')
+const {Contact, Group, Model}= require('./models/model')
 const View = require('./view')
 
 
