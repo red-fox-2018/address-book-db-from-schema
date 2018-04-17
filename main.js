@@ -15,6 +15,9 @@ switch (command[0]) {
   case 'show:contact':
     Controller.showContact(command[0], command.slice(1))
     break;
+  case 'assign:group':
+    Controller.assignGroup(command[0], command.slice(1))
+    break;
   default:
 
 }

@@ -18,7 +18,6 @@ class Contact {
                               inputData[3], inputData[4])
     let query = `INSERT INTO contacts (firstName, lastName, phone, email, address)
                   VALUES (?, ?, ?, ?, ?)`
-    console.log(contact);
     let toInput = [contact._firstName, contact._lastName, contact._phone,
                    contact._email, contact._address]
     db.run(query, toInput, (err) => {
@@ -83,6 +82,24 @@ class Contact {
         allContact.push(contact);
       }
       cb(err, allContact)
+    })
+  }
+
+  static assignContact(inputData, cb) {
+    this.createFullName(inputData, (fullName) => {
+      let query = `SELECT id FROM contacts
+                   WHERE (firstName || ' ' || lastName) = "${fullName}"`;
+      db.get(query, (err, row) => {
+        if (err) {
+          cb(err)
+        } else {
+          let contactId = row.id
+          let query = `INSERT INTO groupContacts (contactId) VALUES (?)`;
+          db.run(query, contactId, (err) => {
+            cb(err, contactId)
+          })
+        }
+      })
     })
   }
 }

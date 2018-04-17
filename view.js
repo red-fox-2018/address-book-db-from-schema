@@ -16,6 +16,9 @@ class View {
         break;
       case 'show:contact':
         console.log('<all> OR <first_name> <last_name>');
+        break;
+      case 'assign:group':
+        console.log('<first_name> <last_name> <group_name>');
       default:
 
     }
@@ -49,6 +52,10 @@ class View {
       console.log('\n');
     })
     console.log('=============================================');
+  }
+
+  static assignSuccess(inputData) {
+    console.log(`${inputData[0]} ${inputData[1]} is successfully assigned to ${inputData[2]}`);
   }
 }
 

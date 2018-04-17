@@ -1,5 +1,6 @@
 const View = require('./view');
 const Contact = require('./models/contact.js');
+const Group = require('./models/group.js');
 
 
 
@@ -52,6 +53,26 @@ class Controller {
     } else if (inputData[0] === 'all') {
       Contact.showAll((err, allContact) => {
         (err) ? View.showErr(err) : View.showContact(allContact)
+      })
+    }
+  }
+
+  static assignGroup(command, inputData) {
+    if (inputData.length === 0) {
+      View.guide(command)
+    } else {
+      Contact.assignContact(inputData, (err, contactId) => {
+        if (err) {
+          View.showErr(err)
+        } else {
+          Group.assignGroup(contactId, inputData[2], (err) => {
+            if (err) {
+              View.showErr(err)
+            } else {
+              View.assignSuccess(inputData)
+            }
+          })
+        }
       })
     }
   }
