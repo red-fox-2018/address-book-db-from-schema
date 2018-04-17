@@ -50,7 +50,9 @@ class Controller {
     if (inputData.length === 0) {
       View.guide(command)
     } else if (inputData[0] === 'all') {
-      Contact.showAll()
+      Contact.showAll((err, allContact) => {
+        (err) ? View.showErr(err) : View.showContact(allContact)
+      })
     }
   }
 }
