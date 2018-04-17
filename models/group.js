@@ -28,9 +28,16 @@ class GroupModel {
 
   static destroy(idGroup, cb){
     let objWhere = GroupModel.arrToObj([idGroup])
+    let id = objWhere.id
 
     group.destroy(tableName, objWhere, function(err){
-      cb(err)
+      if(err){
+        cb(err)
+      }else{
+        group.destroy('Contact_Groups', {groupId : id}, function(err){
+          cb(err)
+        })
+      }
     })
   }
 
