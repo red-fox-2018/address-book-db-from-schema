@@ -13,7 +13,17 @@ class ContactsModel {
     });
   }
   static getAll(callback) {
-    db.all(`SELECT * FROM Contacts`, (err, rows) => {
+    let sqlContacts =
+    `SELECT
+      Contacts.name,
+      Contacts.email,
+      Contacts.phone,
+      GroupContacts.groupName
+      FROM Contacts
+      LEFT JOIN GroupContacts
+      ON Contacts.name = GroupContacts.contactName`;
+
+    db.all(sqlContacts, (err, rows) => {
       if (err) {
         callback(err);
       } else {

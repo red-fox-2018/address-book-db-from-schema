@@ -1,5 +1,3 @@
-
-
 // ContactsModel.getAll((result) => {
 //   console.log(result);
 // });
