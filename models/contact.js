@@ -69,16 +69,20 @@ class Contact {
     })
   }
 
-  static showAll() {
+  static showAll(cb) {
     let query = `SELECT * FROM contacts
                  LEFT JOIN groupContacts
                   ON contacts.id = groupContacts.contactId
                  LEFT JOIN groups
                   ON groupContacts.groupId = groups.id`;
-    db.each(query, (err, rows) => {
-      let contact = new Contact(rows.firstName, rows.lastName, rows.phone,
-                                rows.email, rows.address, rows.name);
-      console.log(contact);
+    db.all(query, (err, rows) => {
+      let allContact = [];
+      for (var i = 0; i < rows.length; i++) {
+        let contact = new Contact(rows[i].firstName, rows[i].lastName, rows[i].phone,
+                                  rows[i].email, rows[i].address, rows[i].name)
+        allContact.push(contact);
+      }
+      cb(err, allContact)
     })
   }
 }
