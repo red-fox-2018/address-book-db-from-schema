@@ -37,6 +37,19 @@ class View {
   static successDelCon(fullName) {
     console.log(`${fullName} successfully deleted`);
   }
+
+  static showContact(contacts) {
+    console.log('=============================================');
+    contacts.forEach((contact) => {
+      console.log(`Name     : ${contact._firstName} ${contact._lastName}`);
+      console.log(`Phone    : ${contact._phone}`);
+      console.log(`Email    : ${contact._email}`);
+      console.log(`Address  : ${contact._address}`);
+      console.log(`Group    : ${contact._group}`);
+      console.log('\n');
+    })
+    console.log('=============================================');
+  }
 }
 
 
