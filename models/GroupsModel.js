@@ -4,20 +4,51 @@ const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./address-book.db');
 
 class GroupsModel {
-  static addOne(name) {
-
+  static addOne(name, callback) {
+    db.run(`INSERT INTO Groups VALUES (null, ?)`, name, (err) => {
+      if (err) {
+        callback(err);
+      } else {
+        callback(1);
+      }
+    });
   }
-  static getAll() {
-    
+  static getAll(callback) {
+    db.all(`SELECT * FROM Groups`, (err, rows) => {
+      if (err) {
+        callback(err);
+      } else {
+        callback(rows);
+      }
+    });
   }
-  static findById(id) {
-
+  static findById(id, callback) {
+    db.get(`SELECT * FROM Groups WHERE id = ?`, id, (err, row) => {
+      if (err) {
+        callback(err);
+      } else {
+        callback(row);
+      }
+    });
   }
-  static deleteById(id) {
-
+  static deleteById(id, callback) {
+    db.run(`DELETE FROM Groups WHERE id = ?`, id, (err) => {
+      if (err) {
+        callback(err);
+      } else {
+        callback(1);
+      }
+    });
   }
-  static updateById(id, name) {
-
+  static updateById(id, name, callback) {
+    let sqlUpdateGroup = `UPDATE Groups SET name = ? WHERE id = ?`;
+    db.run(sqlUpdateGroup, name, id, (err) => {
+      if (err) {
+        callback(err);
+      } else {
+        callback(1);
+      }
+    });
   }
 }
 

@@ -14,8 +14,11 @@ class ContactsModel {
   }
   static getAll(callback) {
     db.all(`SELECT * FROM Contacts`, (err, rows) => {
-      console.log(err)
-      callback(rows);
+      if (err) {
+        callback(err);
+      } else {
+        callback(rows);
+      }
     });
   }
   static findById(id, callback) {
@@ -37,8 +40,8 @@ class ContactsModel {
     });
   }
   static updateById(id, name, company, phone, email, callback) {
-    let sqlUpdateCompany = `UPDATE Contacts SET name = ?, company = ?, phone = ?, email = ? WHERE id = ?`;
-    db.run(sqlUpdateCompany, name, company, phone, email, id, (err) => {
+    let sqlUpdateContact = `UPDATE Contacts SET name = ?, company = ?, phone = ?, email = ? WHERE id = ?`;
+    db.run(sqlUpdateContact, name, company, phone, email, id, (err) => {
       if (err) {
         callback(err);
       } else {

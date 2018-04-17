@@ -20,3 +20,25 @@ const { ContactsModel, GroupsModel } = require('./models');
 // ContactsModel.updateById(3, 'permata', 'Alpha Tech', '123-123', 'permata@gmail.com', (result) => {
 //   console.log(result);
 // });
+
+// -----------------
+
+// GroupsModel.getAll((result) => {
+//   console.log(result);
+// });
+
+// GroupsModel.addOne('PHP', (result) => {
+//   console.log(result);
+// });
+
+// GroupsModel.findById(1, (result) => {
+//   console.log(result);
+// });
+
+// GroupsModel.deleteById(4, (result) => {
+//   console.log(result);
+// });
+
+// GroupsModel.updateById(3, 'RobyOnRails', (result) => {
+//   console.log(result);
+// });
