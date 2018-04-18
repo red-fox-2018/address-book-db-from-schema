@@ -14,6 +14,7 @@ const db = new sqlite3.Database('./libs/address_book.db', (err) => {
 });
 
 class GroupModel {
+
    static add(name, cb) {
       db.run(`INSERT INTO Groups (group_id, name) VALUES (
            null, '${name}')`, (err) => {
@@ -29,6 +30,7 @@ class GroupModel {
          console.log('Close the database connection.');
       });
    }
+
    static update(name, group_id, cb) {
       db.run(`UPDATE Groups SET name = '${name}'
             WHERE group_id = ${group_id};`, (err) => {
@@ -44,6 +46,7 @@ class GroupModel {
          console.log('Close the database connection.');
       });
    }
+
    static delete(group_id, cb) {
       db.run(`DELETE FROM Groups WHERE group_id = ${group_id};`, (err) => {
          if (err) throw err;
@@ -57,6 +60,15 @@ class GroupModel {
          }
          console.log('Close the database connection.');
       });
+   }
+
+   static show(cb){
+     db.all(`SELECT * FROM Groups;`, (err, data)=>{
+       if(err) throw err;
+       else{
+         cb(data);
+       }
+     });
    }
 }
 
