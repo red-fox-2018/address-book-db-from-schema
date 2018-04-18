@@ -8,7 +8,7 @@ function setup_table() {
     let sqlContactCreate =
     `CREATE TABLE IF NOT EXISTS Contacts (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name VARCHAR(100),
+      name VARCHAR(100) UNIQUE,
       company VARCHAR(100),
       phone VARCHAR(100),
       email VARCHAR(100)
@@ -21,7 +21,7 @@ function setup_table() {
     let sqlCreateGroups =
     `CREATE TABLE IF NOT EXISTS Groups (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name VARCHAR(100)
+      name VARCHAR(100) UNIQUE
     )`;
 
     db.run(sqlCreateGroups, (err) => {
@@ -31,8 +31,8 @@ function setup_table() {
     let sqlCreateGroupContacts =
     `CREATE TABLE IF NOT EXISTS GroupContacts (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      contactName VARCHAR(100) UNIQUE,
-      groupName VARCHAR(100) UNIQUE,
+      contactName VARCHAR(100),
+      groupName VARCHAR(100),
       FOREIGN KEY(contactName) REFERENCES Contacts(name),
       FOREIGN KEY(groupName) REFERENCES Groups(name)
     )`;
@@ -48,9 +48,9 @@ function setup_table() {
 
 function seed() {
   db.serialize(function() {
-    db.run(`INSERT INTO Contacts VALUES(null, 'iswanul', 'Alpha Tech', '123457', 'iswanul@gmail.com')`)
-    db.run(`INSERT INTO Contacts VALUES(null, 'umam', 'Alpha Tech', '123458', 'umam@gmail.com')`)
-    db.run(`INSERT INTO Contacts VALUES(null, 'nabila', 'Alpha Tech', '1234569', 'umam@gmail.com')`)
+    db.run(`INSERT INTO Contacts VALUES(null, 'iswanul', 'AlphaTech', '123457', 'iswanul@gmail.com')`)
+    db.run(`INSERT INTO Contacts VALUES(null, 'umam', 'AlphaTech', '123458', 'umam@gmail.com')`)
+    db.run(`INSERT INTO Contacts VALUES(null, 'nabila', 'AlphaTech', '1234569', 'umam@gmail.com')`)
 
     db.run(`INSERT INTO Groups VALUES(null, 'Golang')`);
     db.run(`INSERT INTO Groups VALUES(null, 'JavaScript')`);
@@ -61,5 +61,5 @@ function seed() {
   })
 }
 
-// setup_table()
-// seed();
+setup_table()
+seed();

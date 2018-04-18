@@ -1,9 +1,17 @@
 
-
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./address-book.db');
 
 class GroupsModel {
+  static invite(contactName, groupName, callback) {
+    db.run(`INSERT INTO GroupContacts VALUES (null, ?, ?)`, contactName, groupName, (err) => {
+      if (err) {
+        callback(err);
+      } else {
+        callback(1);
+      }
+    });    
+  }
   static addOne(name, callback) {
     db.run(`INSERT INTO Groups VALUES (null, ?)`, name, (err) => {
       if (err) {

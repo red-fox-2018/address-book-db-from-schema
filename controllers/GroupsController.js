@@ -36,6 +36,18 @@ class GroupsController {
       }
     });
   }
+  static inviteContact(values) {
+    let contactName = values[0];
+    let groupName = values[1];
+
+    GroupsModel.invite(contactName, groupName, (result) => {
+      if (result == 1) {
+        View.showString(`Behasil menambahkan ke group!`);
+      } else {
+        View.showString(`Gagal menambahkan ke group!`);
+      }
+    });
+  }
 }
 
 module.exports = GroupsController;

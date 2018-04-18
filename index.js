@@ -31,6 +31,9 @@ switch(command) {
   case 'group:delete': 
     GroupsController.deleteOne(values);
     break;
+  case 'group:invite': 
+    GroupsController.inviteContact(values);
+    break;
   default:
     console.log('Please enter correct command!');
     break;
