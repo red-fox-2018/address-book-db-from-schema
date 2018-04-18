@@ -11,13 +11,14 @@ const View = require('../views/view');
 
 class ContactGroupController {
 
-   static addGroupContact(contact_id, group_id) {
-      ContactGroupModel.add(contact_id, group_id, (dis) => {
+   static addGroupContact(contactName, groupName) {
+      ContactGroupModel.add(contactName, groupName, (dis) => {
          View.display(dis);
       });
    }
-   static updateGroupContact(contact_id, group_id) {
-      ContactGroupModel.update(contact_id, group_id, (dis) => {
+   
+   static updateGroupContact(contactName, groupName, idContactGroup) {
+      ContactGroupModel.update(contactName, groupName, idContactGroup, (dis) => {
          View.display(dis);
       });
    }
