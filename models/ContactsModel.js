@@ -41,6 +41,7 @@ class ContactsModel {
     });
   }
   static deleteById(id, callback) {
+    db.run(`DELETE FROM GroupContacts WHERE contactName = (SELECT name FROM Contacts WHERE id = ?)`, id);
     db.run(`DELETE FROM Contacts WHERE id = ?`, id, (err) => {
       if (err) {
         callback(err);

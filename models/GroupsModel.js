@@ -42,6 +42,7 @@ class GroupsModel {
     });
   }
   static deleteById(id, callback) {
+    db.run(`DELETE FROM GroupContacts WHERE groupName = (SELECT name FROM Groups WHERE id = ?)`, id);
     db.run(`DELETE FROM Groups WHERE id = ?`, id, (err) => {
       if (err) {
         callback(err);
