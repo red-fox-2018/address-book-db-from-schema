@@ -4,43 +4,43 @@ const View = require('../views/view');
 
 class Controller {
   static dataGroup() {
-    Model.getData()
-      .then(data => {
-        View.showMessage(data);
-      })
-      .catch(err => {
+    Model.getData((err, statusMessage) => {
+      if (err) {
         View.showErrorMessage(err);
-      })
+      } else {
+        View.showMessage(statusMessage);
+      }
+    });
   }
 
   static saveGroup(name) {
-    Model.save(name)
-      .then(data => {
-        View.showMessage(data);
-      })
-      .catch(err => {
+    Model.save(name, (err, data) => {
+      if (err) {
         View.showErrorMessage(err);
-      })
+      } else {
+        View.showMessage(data);
+      }
+    });
   }
 
   static updateGroup(id, value) {
-    Model.update(id, value)
-      .then(statusMessage => {
-        View.showMessage(statusMessage);
-      })
-      .catch(err => {
+    Model.update(id, value, (err, statusMessage) => {
+      if (err) {
         View.showErrorMessage(err);
-      })
+      } else {
+        View.showMessage(statusMessage);
+      }
+    });
   }
 
   static deleteGroup(id) {
-    Model.delete(id)
-      .then(statusMessage => {
-        View.showMessage(statusMessage);
-      })
-      .catch(err => {
+    Model.delete(id, (err, statusMessage) => {
+      if (err) {
         View.showErrorMessage(err);
-      })
+      } else {
+        View.showMessage(statusMessage);
+      }
+    });
   }
 }
 

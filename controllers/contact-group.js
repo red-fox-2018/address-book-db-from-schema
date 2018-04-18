@@ -4,23 +4,17 @@ const View = require('../views/view');
 
 class Controller {
   static assignContact(groupName, contactName) {
-    Model.addContact(groupName, contactName)
-      .then(statusMessage => {
-        View.showMessage(statusMessage);
-      })
-      .catch(err => {
+    Model.addContact(groupName, contactName, (err, statusMessage) => {
+      if (err) {
         View.showErrorMessage(err);
-      })
+      } else {
+        View.showMessage(statusMessage);
+      }
+    });
   }
 
   static deleteGroupId(id) {
-    Model.deleteGroup(id)
-      .then(statusMessage => {
-        View.showMessage(statusMessage);
-      })
-      .catch(err => {
-        View.showErrorMessage(err);
-      })
+    Model.deleteGroup(id);
   }
 }
 
