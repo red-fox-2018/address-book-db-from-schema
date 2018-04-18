@@ -8,28 +8,33 @@ class Contact{
     let angka = '0123456789'
     if(phone.length > 17){
       callback('maksimal phone 17 digit')
-    }
-    for(let i = 0; i < phone.length;i++){
-        let checker = 0
-        for(let j = 0; j < angka.length;j++){
-          if(phone[i] === angka[j]){
-            checker++
+    }else{
+      let isPhone = true
+      for(let i = 0; i < phone.length;i++){
+          let checker = 0
+          for(let j = 0; j < angka.length;j++){
+            if(phone[i] === angka[j]){
+              checker++
+            }
           }
-        }
-        if(checker === 0){
-            callback('input phone salah')
-        }
-    }
-      let query = `INSERT INTO contacts(name, perusahaan, phone, email)
-                   VALUES("${name}","${perusahaan}","${phone}","${email}");`
-      db.run(query,(err)=>{
-                if(err){
-                  callback('data gagal diinput')
-                }else{
-                  callback('data berhasil diinput')
+          if(checker === 0){
+              callback('input phone salah karena mengandung string')
+              isPhone = false
+              break
+          }
+      }if(isPhone){ 
+        let query = `INSERT INTO contacts(name, perusahaan, phone, email)
+                     VALUES("${name}","${perusahaan}","${phone}","${email}");`
+        db.run(query,(err)=>{
+                  if(err){
+                    callback('data gagal diinput')
+                  }else{
+                    callback('data berhasil diinput')
+                  }
                 }
-              }
-      );
+        );
+      }
+    }
   }
 
   static saveUpdateContact(name, perusahaan, phone, email,id, callback){
