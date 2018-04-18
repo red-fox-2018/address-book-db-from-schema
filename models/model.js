@@ -23,6 +23,7 @@ class Model{
             let list_name = {}
             rows.forEach(function (data) {
                 if (list_name[data.name] == undefined) {
+                 
                     list_name[data.name] = [data.groups]
                 }
                 else {
@@ -32,7 +33,13 @@ class Model{
             })
             let num = 1
             for (let key in list_name) {
-                callback(`${num}. ${key}: ${list_name[key]}`)
+                let list_contact = {}
+                rows.forEach(function (data) {
+                    if(data.name==key){
+                        list_contact = data
+                    }
+                })
+                callback(`${num}. ${list_contact.name}, ${list_contact.company}, ${list_contact.telp},${list_contact.email}, groups: ${list_name[key]}`)
                 num++
             }
         })
