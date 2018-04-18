@@ -42,7 +42,7 @@ else if(command1 === 'create' && command2 === 'group'){
         groupName = step1.join(' ')
     }
     else{
-        groupName = step1
+        groupName = step1.join()
     }
     Controller.create(groupName)
 }

@@ -16,8 +16,8 @@ class Controller{
     }
 
     static show(){
-        Model.showContact(function(contacts){
-            View.showContactInfo(contacts)
+        Model.showContact(function(contactGroupData){
+            View.showContactInfo(contactGroupData)
         })
     }
 

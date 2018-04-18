@@ -3,27 +3,36 @@ const db = new sqlite3.Database('AddressBook.db')
 
 class Contact{
     static addDB(company, phone, email, name, callback){
-        console.log('masuk')
         let query = `INSERT INTO contacts VALUES(
             null,"${name}", "${company}", ${phone}, "${email}"
         )`
-        db.run(query,function(){
-            let addedData = [name, company, phone, email]
-            callback(addedData, true)
+        db.run(query,function(err,data){
+            if(err){
+                throw err
+            }
+            else{
+                let addedData = [name, company, phone, email]
+                callback(addedData, true)
+            }
         })
     }
 
     static showDB(callback){
-        let query = `SELECT * FROM contacts`
-        db.all(query,[],function(err,contacts){
-            callback(contacts)
+        let query = `SELECT contacts.id, contacts.name, contacts.company, contacts.phone, contacts.email, groups.name_group 
+                    FROM contacts LEFT JOIN contact_group ON contacts.id = contact_group.contactId
+                    LEFT JOIN groups ON contact_group.groupId = groups.id_group`
+        db.all(query,[],function(err,contactGroupData){
+            callback(contactGroupData)
         })
     }
 
     static deleteDB(id, callback){
         let query = `DELETE FROM contacts WHERE id = ${id}`
         db.run(query,function(){
-            callback(true)
+            let queryConjungtion = `DELETE FROM contact_group WHERE contactId = ${id}`
+            db.run(queryConjungtion,function(){
+                callback(true)
+            })
         })
     }
 

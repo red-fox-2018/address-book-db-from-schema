@@ -11,8 +11,8 @@ class Model {
     }
 
     static showContact(callback){
-        Contact.showDB(function(contacts){
-            callback(contacts)
+        Contact.showDB(function(contactGroupData){
+            callback(contactGroupData)
         })
     }
 
@@ -42,7 +42,7 @@ class Model {
 
     static addToGroup(contactID, groupID, callback){
         Group.addToGroup(contactID, groupID, function(Cname, Gname, status){
-            callback(status)
+            callback(Cname, Gname, status)
         })
     }
 

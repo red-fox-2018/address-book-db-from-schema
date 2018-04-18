@@ -13,7 +13,9 @@ Setup.CreateTable('contacts',`id INTEGER PRIMARY KEY AUTOINCREMENT,
                                name TEXT NOT NULL UNIQUE, company TEXT, phone TEXT NOT NULL UNIQUE, 
                                email TEXT NOT NULL UNIQUE`)
 
-Setup.CreateTable('groups',`id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT`)
+Setup.CreateTable('groups',`id_group INTEGER PRIMARY KEY AUTOINCREMENT, name_group TEXT`)
 
-Setup.CreateTable('contact_group',`id INTEGER PRIMARY KEY AUTOINCREMENT, contactsName TEXT, groupName TEXT`)
+// Setup.CreateTable('contact_group',`id INTEGER PRIMARY KEY AUTOINCREMENT, contactsName TEXT, groupName TEXT`)
+
+Setup.CreateTable('contact_group',`id_contact_group INTEGER PRIMARY KEY AUTOINCREMENT, contactId INTEGER, groupId INTEGER`)
                                
