@@ -11,7 +11,8 @@ switch (command) {
   case 'nameDetail':{return Controller.nameDetail(content)}
   case 'groupDetail':{return Controller.groupDetail(content)}
   case 'deleteGroup':{return Controller.deleteGroup(content)}
-
+  case 'groupNameDetail':{return Controller.groupNameDetail(command)}
+  case 'updateContact': {return Controller.updateContact (content)}
 
   default:'wrong command'
 

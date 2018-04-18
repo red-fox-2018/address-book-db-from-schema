@@ -31,6 +31,25 @@ class ModelContactGroup {
           })
       })
   }
+
+  static groupNameDetail(content,callback){
+    let sql=`select name, groupName
+              from contact_group
+              inner join contact on contact_group.contact_id =contact.contact_id
+              inner join groupcontact on contact_group.group_id = groupcontact.group_id`
+      db.all(sql,function(err,resultData) {
+        if(err){
+          callback(err)
+        }else{
+          callback(resultData)
+        }
+      })
+  }
+
+
+
+
+
 }
 
 module.exports = ModelContactGroup;

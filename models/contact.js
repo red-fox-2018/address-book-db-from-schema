@@ -22,6 +22,22 @@ class ModelContact {
     })
   }
 
+  static updateContact(content, cb){
+       let query = `UPDATE Contacts
+                       SET ${content[1]} = "${content[2]}"
+                       WHERE id = ${content[0]}`
+
+       db.run(query, err =>{
+
+           if(!err){
+               cb('update contact sukses')
+           } else {
+               cb(err)
+           }
+       })
+   }
+
+
   static nameDetail(content,callback){
     let sql=`select name, groupName
               from contact_group

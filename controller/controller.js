@@ -47,6 +47,18 @@ class Controller {
     })
   }
 
+  static groupNameDetail(command, callback){
+    ModelContactGroup.groupNameDetail(command,message=>{
+        View.show(message)
+    })
+  }
+
+  static updateContact(content, callback){
+    ModelContact.updateContact(content,message=>{
+        View.show(message)
+    })
+  }
+
 }
 
 
