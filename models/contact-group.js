@@ -16,15 +16,20 @@ const db = new sqlite3.Database('./libs/address_book.db', (err) => {
 
 
 class ContactGroupModel {
-  
-   static add(contact_id, group_id, cb) {
-      db.run(`INSERT INTO Contact_Groups (contact_groups_id, contact_id, group_id) VALUES (
-             null, ?, ?)`, contact_id, group_id, (err) => {
-         if (err) throw err;
-         else {
-            cb('Table Contact_Groups created successfully');
-         }
+
+   static add(contactName, groupName, cb) {
+      db.get(`SELECT contact_id FROM Contacts WHERE name = '${contactName}';`, (err, contact) => {
+         db.get(`SELECT group_id FROM Groups WHERE name = '${groupName}';`, (err, group) => {
+            db.run(`INSERT INTO Contact_Groups (contact_groups_id, contact_id, group_id) VALUES (
+                  null, ?, ?)`, contact.contact_id, group.group_id, (err) => {
+               if (err) throw err;
+               else {
+                  cb('Table Contact_Groups created successfully');
+               }
+            });
+         });
       });
+
       db.close((err) => {
          if (err) {
             return console.error(err.message);
@@ -32,15 +37,22 @@ class ContactGroupModel {
          console.log('Close the database connection.');
       });
    }
-   static update(contact_id, group_id, contact_groups_id, cb) {
-      db.run(`UPDATE Contact_Groups SET contact_id = '${contact_id}',
-                                group_id = '${group_id}'
-                                WHERE contact_groups_id = ${contact_groups_id};`, (err) => {
-         if (err) throw err;
-         else {
-            cb('Table Contact_Groups updated successfully');
-         }
+
+
+   static update(contactName, groupName, contact_groups_id, cb) {
+      db.get(`SELECT contact_id FROM Contacts WHERE name = '${contactName}';`, (err, contact) => {
+         db.get(`SELECT group_id FROM Groups WHERE name = '${groupName}';`, (err, group) => {
+            db.run(`UPDATE Contact_Groups SET contact_id = ${contact.contact_id},
+                                                 group_id = ${group.group_id}
+                                  WHERE contact_groups_id = ${contact_groups_id};`, (err) => {
+               if (err) throw err;
+               else {
+                  cb('Table Contact_Groups updated successfully');
+               }
+            });
+         });
       });
+
       db.close((err) => {
          if (err) {
             return console.error(err.message);
@@ -48,6 +60,7 @@ class ContactGroupModel {
          console.log('Close the database connection.');
       });
    }
+
    static delete(contact_groups_id, cb) {
       db.run(`DELETE FROM Contact_Groups WHERE contact_groups_id = ${contact_groups_id};`, (err) => {
          if (err) throw err;
