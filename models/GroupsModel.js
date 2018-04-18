@@ -4,7 +4,9 @@ const db = new sqlite3.Database('./address-book.db');
 
 class GroupsModel {
   static invite(contactName, groupName, callback) {
-    db.run(`INSERT INTO GroupContacts VALUES (null, ?, ?)`, contactName, groupName, (err) => {
+    db.run(`INSERT INTO GroupContacts VALUES (null, ?, ?)`, contactName, groupName, function (err) {
+      /* using this with, but not work with arrow function */
+      // console.log('this -------', this);
       if (err) {
         callback(err);
       } else {
