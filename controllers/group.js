@@ -9,19 +9,28 @@ const GroupModel = require('../models/group');
 const View = require('../views/view');
 
 class GroupController {
+
    static addGroup(name) {
       GroupModel.add(name, (dis) => {
          View.display(dis);
       });
    }
+
    static updateGroup(name, group_id) {
       GroupModel.update(name, group_id, (dis) => {
          View.display(dis);
       });
    }
+
    static deleteGroup(group_id) {
       GroupModel.delete(group_id, (dis) => {
          View.display(dis);
+      });
+   }
+   
+   static showGroup(cb) {
+      GroupModel.show((dis) => {
+         View.displayShowGroup(dis);
       });
    }
 }
