@@ -13,7 +13,7 @@ class Controller {
     if (inputData.length === 0) {
       View.guide(command);
     } else {
-      Contact.add(inputData, (err, fullName) => {
+      Contact.add(inputData, (fullName, err) => {
         if (err) {
           View.showErr(err)
         } else {
@@ -72,6 +72,34 @@ class Controller {
               View.assignSuccess(inputData)
             }
           })
+        }
+      })
+    }
+  }
+
+  static addGroup(command, newGroupName) {
+    if (newGroupName.length === 0) {
+      View.guide(command)
+    } else {
+      Group.addGroup(newGroupName[0], (err) => {
+        if (err) {
+          View.showErr(err)
+        } else {
+          View.successAddGroup(newGroupName[0])
+        }
+      })
+    }
+  }
+
+  static deleteGroup(command, groupName) {
+    if (groupName.length === 0) {
+      View.guide(command)
+    } else {
+      Group.deleteGroup(groupName[0], (err) => {
+        if (err) {
+          View.showErr(err)
+        } else {
+          View.successDelGroup(groupName[0])
         }
       })
     }

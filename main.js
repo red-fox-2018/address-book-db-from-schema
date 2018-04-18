@@ -18,6 +18,12 @@ switch (command[0]) {
   case 'assign:group':
     Controller.assignGroup(command[0], command.slice(1))
     break;
+  case 'add:group':
+    Controller.addGroup(command[0], command.slice(1))
+    break;
+  case 'delete:group':
+    Controller.deleteGroup(command[0], command.slice(1))
+    break;
   default:
 
 }

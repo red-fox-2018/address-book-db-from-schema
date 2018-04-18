@@ -22,49 +22,48 @@ class Contact {
                    contact._email, contact._address]
     db.run(query, toInput, (err) => {
       if (err) {
-        cb(err)
+        cb(null, err)
       } else {
         let query = `SELECT (firstName || ' ' || lastName) as fullName
                       FROM contacts ORDER BY id DESC`;
         db.get(query, (err, row) => {
           if (err) {
-            cb(err)
+            cb(null, err)
           } else {
-            cb(err, row.fullName)
+            cb(row.fullName)
           }
         })
       }
     })
   }
 
-  static createFullName(inputData, cb) {
+  static createFullName(inputData) {
     let contact = new Contact(inputData[0], inputData[1])
     let fullName = contact._firstName + ' ' + contact._lastName;
-    cb(fullName)
+    return fullName;
   }
+
   static update(inputData, cb) {
-    this.createFullName(inputData, (fullName) => {
-      let col_name = inputData[2];
-      let newData = inputData[3];
-      let innerQuery = `SELECT id FROM contacts
-                        WHERE (firstName || ' ' || lastName) = "${fullName}"`;
-      let query = `UPDATE contacts SET ${col_name} = "${newData}"
-                   WHERE id IN (${innerQuery})`;
-      db.run(query, (err) => {
-        cb(err, fullName)
-      })
+    let fullName = this.createFullName(inputData)
+    let col_name = inputData[2];
+    let newData = inputData[3];
+    let innerQuery = `SELECT id FROM contacts
+                      WHERE (firstName || ' ' || lastName) = "${fullName}"`;
+    let query = `UPDATE contacts SET ${col_name} = "${newData}"
+                 WHERE id IN (${innerQuery})`;
+    db.run(query, (err) => {
+      cb(err, fullName)
     })
   }
 
   static delete(inputData, cb) {
-    this.createFullName(inputData, (fullName) => {
-      let innerQuery = `SELECT id FROM contacts
-                        WHERE (firstName || ' ' || lastName) = "${fullName}"`;
-      let query = `DELETE FROM contacts
-                   WHERE id IN (${innerQuery})`;
-      db.run(query, (err) => {
-        cb(err, fullName)
-      })
+    let fullName = this.createFullName(inputData)
+    let innerQuery = `SELECT id FROM contacts
+                      WHERE (firstName || ' ' || lastName) = "${fullName}"`;
+    let query = `DELETE FROM contacts
+                 WHERE id IN (${innerQuery})`;
+    db.run(query, (err) => {
+      cb(err, fullName)
     })
   }
 
@@ -86,20 +85,19 @@ class Contact {
   }
 
   static assignContact(inputData, cb) {
-    this.createFullName(inputData, (fullName) => {
-      let query = `SELECT id FROM contacts
-                   WHERE (firstName || ' ' || lastName) = "${fullName}"`;
-      db.get(query, (err, row) => {
-        if (err) {
-          cb(err)
-        } else {
-          let contactId = row.id
-          let query = `INSERT INTO groupContacts (contactId) VALUES (?)`;
-          db.run(query, contactId, (err) => {
-            cb(err, contactId)
-          })
-        }
-      })
+    let fullName = this.createFullName(inputData)
+    let query = `SELECT id FROM contacts
+                 WHERE (firstName || ' ' || lastName) = "${fullName}"`;
+    db.get(query, (err, row) => {
+      if (err) {
+        cb(err)
+      } else {
+        let contactId = row.id
+        let query = `INSERT INTO groupContacts (contactId) VALUES (?)`;
+        db.run(query, contactId, (err) => {
+          cb(err, contactId)
+        })
+      }
     })
   }
 }

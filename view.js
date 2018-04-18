@@ -19,6 +19,13 @@ class View {
         break;
       case 'assign:group':
         console.log('<first_name> <last_name> <group_name>');
+        break;
+      case 'add:group':
+        console.log('<group_name>');
+        break;
+      case 'delete:group':
+        console.log('<group_name>');
+        break;
       default:
 
     }
@@ -56,6 +63,14 @@ class View {
 
   static assignSuccess(inputData) {
     console.log(`${inputData[0]} ${inputData[1]} is successfully assigned to ${inputData[2]}`);
+  }
+
+  static successAddGroup(newGroupName) {
+    console.log(`Group ${newGroupName} has been successfully added`);
+  }
+
+  static successDelGroup(groupName) {
+    console.log(`Group ${groupName} has been successfully deleted`);
   }
 }
 
