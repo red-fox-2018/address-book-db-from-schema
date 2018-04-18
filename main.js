@@ -8,7 +8,7 @@
 
 const ContactController = require('./controllers/contact.js');
 const GroupController = require('./controllers/group.js');
-const ContactGroupController= require('./controllers/contact-group.js');
+const ContactGroupController = require('./controllers/contact-group.js');
 const argv = process.argv;
 
 switch (argv[2]) {
@@ -23,6 +23,10 @@ switch (argv[2]) {
    case 'deleteContact':
       ContactController.deleteContact(argv[3]);
       break;
+   case 'showContact':
+      ContactController.showContact();
+      break;
+
 
       //===Group
    case 'addGroup':
@@ -33,20 +37,19 @@ switch (argv[2]) {
       break;
    case 'deleteGroup':
       GroupController.deleteGroup(argv[3]);
-
+      break;
+   case 'showGroup':
+      GroupController.showGroup();
+      break;
 
       //===GroupContact
-      break;
    case 'addGroupContact':
       ContactGroupController.addGroupContact(argv[3], argv[4]);
       break;
    case 'updateGroupContact':
-      ContactGroupController.updateGroupContact(argv[3], argv[4]);
+      ContactGroupController.updateGroupContact(argv[3], argv[4], argv[5]);
       break;
    case 'deleteGroupContact':
       ContactGroupController.deleteGroupContact(argv[3]);
-      break;
-   case 'showContact':
-      ContactController.showContact();
       break;
 }
