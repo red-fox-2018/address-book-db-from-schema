@@ -29,6 +29,12 @@ switch (command[0]) {
   case 'addContactToGroup':
     Controller.addCToG(command[1],command[2])//contactName,groupName
     break;
+  case 'showGroupInContact':
+    Controller.showGroupInContact()
+    break;
+  case 'showContactInGroup':
+    Controller
+    break;
   default:
 
 }

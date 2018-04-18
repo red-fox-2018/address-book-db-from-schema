@@ -1,6 +1,12 @@
 const sqlite3 = require('sqlite3').verbose()
 const db = new sqlite3.Database('database.db')
 
+// function printName() {
+//   db.all(`SELECT * FROM contacts`,(err,data) =>{
+//     console.log(data);
+//   })
+// }
+// printName()
 class Contact {
   static add (name,company,telephoneNumber,email,callback){
     db.serialize(()=> {
@@ -32,6 +38,25 @@ class Contact {
       callback(`Contact with id : ${id} has been deleted`)
     })
     db.close()
+  }
+  static showGIC(callback){
+    db.all(`SELECT template.name AS contactName, template.groupsId AS groupId, groups.name AS groupName FROM (SELECT contacts.id,contacts.name,groups_contacts.groupsId FROM groups_contacts JOIN contacts ON contacts.id = groups_contacts.contactsId ) AS template JOIN groups ON groups.id = template.groupsId`, (err,template)=>{
+      let query = `SELECT * FROM contacts`
+      db.all(query,(err,listContact) =>{
+        // console.log(listContact);
+        for (var i = 0; i < listContact.length; i++) {
+          let result = `${listContact[i].name} : `
+          let arrGroup = []
+          for (var j = 0; j < template.length; j++) {
+            if (listContact[i].name == template[j].contactName) {
+              arrGroup.push(template[j].groupName)
+            }
+          }
+          result += arrGroup
+          callback(null,result)
+        }
+      })
+    })
   }
 }
 

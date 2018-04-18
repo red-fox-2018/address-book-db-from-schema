@@ -83,6 +83,14 @@ class Controller {
       }
     })
   }
+  static showGroupInContact(){
+    Contact.showGIC((err,listGIC)=>{
+      if (err) {
+        View.errorMessage(err)
+      } else {
+        View.showMessage(listGIC)
+      }
+    })
+  }
 }
-
 module.exports = Controller
