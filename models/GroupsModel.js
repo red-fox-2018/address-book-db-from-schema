@@ -24,7 +24,16 @@ class GroupsModel {
     });
   }
   static getAll(callback) {
-    db.all(`SELECT * FROM Groups`, (err, rows) => {
+
+    let groupListSql = `
+      SELECT
+        Groups.name,
+        GroupContacts.contactName
+        FROM Groups
+        LEFT JOIN GroupContacts ON Groups.name = GroupContacts.groupName;
+    `;
+
+    db.all(groupListSql, (err, rows) => {
       if (err) {
         callback(err);
       } else {
